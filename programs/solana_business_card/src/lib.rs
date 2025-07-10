@@ -22,6 +22,15 @@ pub mod solana_business_card {
         msg!("Greetings from {}", context.program_id);
         msg!("User {user_public_key}'s favorite number is {number}, favorite color is: {color}",);
 
+        // 验证颜色长度限制
+        require!(color.len() <= 50, CustomError::ColorTooLong);
+        
+        // 验证爱好数量和每个爱好的长度限制
+        require!(hobbies.len() <= 5, CustomError::TooManyHobbies);
+        for hobby in &hobbies {
+            require!(hobby.len() <= 50, CustomError::HobbyTooLong);
+        }
+
         msg!("User's hobbies are: {:?}", hobbies);
 
         context.accounts.favorites.set_inner(Favorites {
@@ -62,4 +71,14 @@ pub struct SetFavorites<'info> {
     pub favorites: Account<'info, Favorites>,
 
     pub system_program: Program<'info, System>,
+}
+
+#[error_code]
+pub enum CustomError {
+    #[msg("Color string is too long (max 50 characters)")]
+    ColorTooLong,
+    #[msg("Too many hobbies (max 5)")]
+    TooManyHobbies,
+    #[msg("Hobby string is too long (max 50 characters)")]
+    HobbyTooLong,
 }

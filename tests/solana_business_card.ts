@@ -262,7 +262,7 @@ describe("solana_business_card", () => {
 
         expect.fail("应该抛出错误");
       } catch (error) {
-        expect(error.message).to.include("unknown signer");
+        expect(error.message).to.include("Signature verification failed");
       }
     });
 
@@ -377,7 +377,7 @@ describe("solana_business_card", () => {
 
         expect.fail("应该抛出错误");
       } catch (error) {
-        expect(error.message).to.include("max length");
+        expect(error.message).to.include("Color string is too long");
       }
     });
 
@@ -408,7 +408,7 @@ describe("solana_business_card", () => {
 
         expect.fail("应该抛出错误");
       } catch (error) {
-        expect(error.message).to.include("max length");
+        expect(error.message).to.include("Too many hobbies");
       }
     });
 
@@ -439,7 +439,7 @@ describe("solana_business_card", () => {
 
         expect.fail("应该抛出错误");
       } catch (error) {
-        expect(error.message).to.include("max length");
+        expect(error.message).to.include("Hobby string is too long");
       }
     });
   });
