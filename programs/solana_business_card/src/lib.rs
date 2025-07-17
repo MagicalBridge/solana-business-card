@@ -42,6 +42,16 @@ pub mod solana_business_card {
     }
 
     // We can also add a get_favorites instruction handler to return the user's favorite number and color
+    pub fn get_favorites(context: Context<GetFavorites>) -> Result<Favorites> {
+        let favorites = &context.accounts.favorites;
+        msg!("获取用户喜好数据: 数字={}, 颜色={}, 爱好={:?}", favorites.number, favorites.color, favorites.hobbies);
+        // 返回克隆的数据
+        Ok(Favorites {
+            number: favorites.number,
+            color: favorites.color.clone(),
+            hobbies: favorites.hobbies.clone(),
+        })
+    }
 }
 
 // What we will put inside the Favorites PDA
@@ -71,6 +81,18 @@ pub struct SetFavorites<'info> {
     pub favorites: Account<'info, Favorites>,
 
     pub system_program: Program<'info, System>,
+}
+
+// 查询用户喜好数据的账户结构
+#[derive(Accounts)]
+pub struct GetFavorites<'info> {
+    pub user: Signer<'info>,
+
+    #[account(
+        seeds=[b"solana_business_card", user.key().as_ref()],
+        bump
+    )]
+    pub favorites: Account<'info, Favorites>,
 }
 
 #[error_code]
