@@ -6,7 +6,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-solana_business_card = "BYBFmxjHn48LVAjKfo7dX6kPTw62HNPTktMqnpNeeiHu"
+solana_business_card = "CRMKu2kLLiGM18cCtWVgyTzYXyLgdrKxAto1B2CVWNqZ"
 
 [registry]
 url = "https://api.apr.dev"
